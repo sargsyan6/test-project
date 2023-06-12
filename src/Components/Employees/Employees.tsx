@@ -5,6 +5,7 @@ import { TEmployees, addEmployees } from "features/getEmployees/getEmployees";
 import OneEmployee from "Components/OneEmployee";
 import { addAllEmployees } from "features/getAllEmployees/getAllEmployees";
 import ChangeInputs from "Components/ChangeInputs";
+import AddTaskInputs from "Components/AddTaskInputs";
 
 type TArr = Array<undefined>
 
@@ -14,6 +15,7 @@ const Employees = () => {
   const dispatch = useAppDispatch()
   const [count , setCount] = useState(1)
   const [changeMode , setChangeMode] = useState(false)
+  const [isAddTaskOpen , setIsAddTaskOpen] = useState(false)
   const limit = 3
   const arr:TArr = []
   arr.length = Math.ceil(selectorAll.length / limit)
@@ -62,6 +64,7 @@ const Employees = () => {
             handleClickButton(index)
         }}>{index+1}</button>)}
     </div>
+    {!isAddTaskOpen ? <div onClick={()=>setIsAddTaskOpen(true)}>Add Task</div> : <AddTaskInputs/> }
     </>
     
   )
