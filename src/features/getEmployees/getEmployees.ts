@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice,  } from "@reduxjs/toolkit";
 
 type TEmployees = {
   id: number | string;
@@ -11,8 +11,8 @@ type TEmployees = {
 const initialState: TEmployees = [];
 
 export const getEmployees = createAsyncThunk(
-    "async/getPosts",
-    async () => {        
+    "async/getEmployees",
+    async (thunkAPI) => {        
         const baseUrl = "https://rocky-temple-83495.herokuapp.com/employees";
         try {
             return await fetch(baseUrl, {
@@ -20,11 +20,11 @@ export const getEmployees = createAsyncThunk(
                 headers: {"Content-Type": "application/json"},
             })
             .then((res) => res.json())
-               .then((res) =>{                
+               .then((res:TEmployees) =>{                
                 return res
                })
         } catch (e) {
-            return "reject";
+            return "reject"
         }
     }
 )
