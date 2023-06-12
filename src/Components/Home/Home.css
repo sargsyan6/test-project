@@ -1,0 +1,22 @@
+.container{
+    display: flex;
+    gap: 15px;
+}
+
+button{
+    cursor: pointer;
+}
+
+.employees_button{
+    background-color: green;
+    font-size: 30px;
+    border-radius: 5px;
+    padding: 3px;
+}
+
+.tasks_button{
+    background-color: magenta;
+    font-size: 30px;
+    border-radius: 5px;
+    padding: 3px;
+}
