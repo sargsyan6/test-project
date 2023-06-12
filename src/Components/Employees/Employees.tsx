@@ -4,7 +4,6 @@ import { useAppDispatch, useAppSelector } from "app/store";
 import { TEmployees, addEmployees } from "features/getEmployees/getEmployees";
 import OneEmployee from "Components/OneEmployee";
 import { addAllEmployees } from "features/getAllEmployees/getAllEmployees";
-import ChangeInputs from "Components/ChangeInputs";
 import AddTaskInputs from "Components/AddTaskInputs";
 
 type TArr = Array<undefined>
@@ -14,16 +13,16 @@ const Employees = () => {
   const selectorAll = useAppSelector((st) => st.allEmployees);
   const dispatch = useAppDispatch()
   const [count , setCount] = useState(1)
-  const [changeMode , setChangeMode] = useState(false)
   const [isAddTaskOpen , setIsAddTaskOpen] = useState(false)
+  const [isLoading , setIsLoading] = useState(false)
   const limit = 3
   const arr:TArr = []
   arr.length = Math.ceil(selectorAll.length / limit)
+  console.log(selectorAll);
+  
   
 
-  const handleChange = ()=>{
-    setChangeMode(!changeMode)
-  }
+ 
   
   
   
@@ -33,17 +32,17 @@ const Employees = () => {
     fetch(`https://rocky-temple-83495.herokuapp.com/employees?_page=${count}&_limit=${limit}`)
       .then((res) => res.json())
       .then((res) => {
-        
+        console.log(res)
         dispatch(addEmployees(res));
       });
-  }, [count]);
+  }, [count , isLoading]);
 
 
   useEffect(()=>{
     fetch("https://rocky-temple-83495.herokuapp.com/employees")
         .then((res)=>res.json())
             .then((res)=>dispatch(addAllEmployees(res)))
-  },[])
+  },[isLoading])
 
   const handleClickButton = (index:number)=>{
     if(index + 1 !== count || index + 1 < selectorAll.length){
@@ -57,7 +56,7 @@ const Employees = () => {
 
     <>
     <div className="employee_container">
-        {selectorPagination.map((it:TEmployees)=>changeMode? <ChangeInputs key={it.id} {...it}/> : <OneEmployee handleChange={handleChange}  key={it.id} {...it}/>)}
+        {selectorPagination.map((it:TEmployees)=><OneEmployee key={it.id} {...it}/>)}
     </div>
     <div className="pagination">
         {arr.map((it , index)=><button onClick={()=>{

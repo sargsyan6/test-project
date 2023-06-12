@@ -7,7 +7,6 @@ export type TEmployees = {
   email: string;
   position: string;
   changeMode?:boolean
-  handleChange?:()=>void
 }
 
 
@@ -15,7 +14,7 @@ const initialState: Array<TEmployees> = [];
 
 
 export const deleteEmployees = createAsyncThunk(
-    "async/getEmployees",
+    "async/deleteEmployees",
     async (id:number|string) => {        
         const baseUrl = `https://rocky-temple-83495.herokuapp.com/employees/${id}`;
         try {
@@ -25,7 +24,7 @@ export const deleteEmployees = createAsyncThunk(
             })
             .then((res) => res.json())
                .then((res) =>{                
-                console.log(res)
+                return id
                })
         } catch (e) {
             return "reject"
