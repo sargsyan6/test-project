@@ -1,0 +1,13 @@
+.employee_container >div{
+    margin-top: 10px;
+    
+}
+
+.pagination{
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    gap: 50px;
+}

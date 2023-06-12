@@ -1,27 +1,31 @@
 import { createAsyncThunk, createSlice,  } from "@reduxjs/toolkit";
 
-type TEmployees = {
+export type TEmployees = {
   id: number | string;
   name: string;
   surname: string;
   email: string;
   position: string;
-}[]
+  changeMode?:boolean
+  handleChange?:()=>void
+}
 
-const initialState: TEmployees = [];
 
-export const getEmployees = createAsyncThunk(
+const initialState: Array<TEmployees> = [];
+
+
+export const deleteEmployees = createAsyncThunk(
     "async/getEmployees",
-    async (thunkAPI) => {        
-        const baseUrl = "https://rocky-temple-83495.herokuapp.com/employees";
+    async (id:number|string) => {        
+        const baseUrl = `https://rocky-temple-83495.herokuapp.com/employees/${id}`;
         try {
             return await fetch(baseUrl, {
-                method: "GET",
+                method: "DELETE",
                 headers: {"Content-Type": "application/json"},
             })
             .then((res) => res.json())
-               .then((res:TEmployees) =>{                
-                return res
+               .then((res) =>{                
+                console.log(res)
                })
         } catch (e) {
             return "reject"
@@ -34,10 +38,13 @@ export const employeesSlice = createSlice({
     name: "employees",
     initialState,
     reducers: {
-      
+      addEmployees:(state:TEmployees[] ,{payload})=>{
+        return payload
+      }
     },
    
   });
 
 
+  export const {addEmployees} = employeesSlice.actions
   export default employeesSlice.reducer
