@@ -3,67 +3,51 @@ import "./Employees.css";
 import { useAppDispatch, useAppSelector } from "app/store";
 import { TEmployees, addEmployees } from "features/getEmployees/getEmployees";
 import OneEmployee from "Components/OneEmployee";
-import { addAllEmployees } from "features/getAllEmployees/getAllEmployees";
 import AddTaskInputs from "Components/AddTaskInputs";
+import Pagination from "Components/Pagination";
 
-type TArr = Array<undefined>
 
 const Employees = () => {
-  const selectorPagination = useAppSelector((st) => st.employees);
-  const selectorAll = useAppSelector((st) => st.allEmployees);
+  const selector = useAppSelector((st) => st.employees);
   const dispatch = useAppDispatch()
-  const [count , setCount] = useState(1)
+  const [cuurrentPage , setCurrentPage] = useState(1)
+  const [limit] = useState(5)
   const [isAddTaskOpen , setIsAddTaskOpen] = useState(false)
   const [isLoading , setIsLoading] = useState(false)
-  const limit = 3
-  const arr:TArr = []
-  arr.length = Math.ceil(selectorAll.length / limit)
-  console.log(selectorAll);
+
+  const lastPageIndex = cuurrentPage * limit
+  const firstPageIndex = lastPageIndex - cuurrentPage
+  const current = selector.slice(firstPageIndex , lastPageIndex+1)
+  console.log(current);
+  
+
+  const paginate = (pageNumber:number)=> {
+    if(pageNumber !==cuurrentPage) setCurrentPage(pageNumber)
+  }
   
   
 
  
   
   
-  
-  
-  useEffect(() => {
-
-    fetch(`https://rocky-temple-83495.herokuapp.com/employees?_page=${count}&_limit=${limit}`)
-      .then((res) => res.json())
-      .then((res) => {
-        console.log(res)
-        dispatch(addEmployees(res));
-      });
-  }, [count , isLoading]);
-
 
   useEffect(()=>{
     fetch("https://rocky-temple-83495.herokuapp.com/employees")
         .then((res)=>res.json())
-            .then((res)=>dispatch(addAllEmployees(res)))
-  },[isLoading])
+            .then((res)=>dispatch(addEmployees(res)))
+  },[])
 
-  const handleClickButton = (index:number)=>{
-    if(index + 1 !== count || index + 1 < selectorAll.length){
-        setCount(count+1)
-    }
-    else if(count === selectorAll.length ){
-        setCount(1)
-    }
-  }
+  
+
+  const changeAddTaskMode = ():void=>setIsAddTaskOpen(!isAddTaskOpen)
   return (
 
     <>
     <div className="employee_container">
-        {selectorPagination.map((it:TEmployees)=><OneEmployee key={it.id} {...it}/>)}
+        {current.map((it:TEmployees)=><OneEmployee key={it.id} {...it}/>)}
     </div>
-    <div className="pagination">
-        {arr.map((it , index)=><button onClick={()=>{
-            handleClickButton(index)
-        }}>{index+1}</button>)}
-    </div>
-    {!isAddTaskOpen ? <div onClick={()=>setIsAddTaskOpen(true)}>Add Task</div> : <AddTaskInputs/> }
+    <Pagination limit = {limit} paginate={paginate} total={selector.length}/>
+    {!isAddTaskOpen ? <div onClick={changeAddTaskMode}>Add Task</div> : <AddTaskInputs changeAddTaskMode={changeAddTaskMode}/> }
     </>
     
   )

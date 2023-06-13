@@ -1,20 +1,73 @@
-import React from "react";
+import { useAppDispatch } from "app/store";
+import {
+  changeEmployess,
+  editEmployees,
+} from "features/getEmployees/getEmployees";
+import React, { FC, useState } from "react";
 
-const ChangeInputs = () => {
+type TArg = {
+  handleChange: () => void;
+  id: number | string;
+};
+
+const ChangeInputs: FC<TArg> = ({ id, handleChange }) => {
+  const [changeName, setChangeName] = useState("");
+  const [changeSurName, setChangeSurName] = useState("");
+  const [changeEmail, setChangeEmail] = useState("");
+
+  const dispatch = useAppDispatch();
+  const handleChangeName = (e: React.ChangeEvent<HTMLInputElement>) =>
+    setChangeName(e.target.value);
+  const handleChangeSurName = (e: React.ChangeEvent<HTMLInputElement>) =>
+    setChangeSurName(e.target.value);
+  const handleChangeEmail = (e: React.ChangeEvent<HTMLInputElement>) =>
+    setChangeEmail(e.target.value);
+  const handleSave = async () => {
+    await editEmployees({
+      id: id,
+      name: changeName,
+      surname: changeSurName,
+      email: changeEmail,
+    });
+    await dispatch(
+      changeEmployess({
+        id: id,
+        name: changeName,
+        surname: changeSurName,
+        email: changeEmail,
+      })
+    );
+    await handleChange();
+  };
   return (
     <>
       <div className="oneEmployee">
         <div>
-          <input type="text" placeholder="name" />
+          <input
+            value={changeName}
+            onChange={handleChangeName}
+            type="text"
+            placeholder="name"
+          />
         </div>
         <div>
-          <input type="text" placeholder="surname" />
+          <input
+            value={changeSurName}
+            onChange={handleChangeSurName}
+            type="text"
+            placeholder="surname"
+          />
         </div>
         <div>
-          <input type="text" placeholder="email" />
+          <input
+            value={changeEmail}
+            onChange={handleChangeEmail}
+            type="text"
+            placeholder="email"
+          />
         </div>
       </div>
-      <button>Save</button>
+      <button onClick={handleSave}>Save</button>
     </>
   );
 };

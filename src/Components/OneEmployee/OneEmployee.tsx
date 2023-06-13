@@ -3,9 +3,13 @@ import "./OneEmployee.css";
 import {
   TEmployees,
   deleteEmployees,
+  filterEmployees,
 } from "features/getEmployees/getEmployees";
 import ChangeInputs from "Components/ChangeInputs";
 import { useAppDispatch } from "app/store";
+import { useNavigate } from "react-router-dom";
+
+//type THandleChange = ()=>void
 
 const OneEmployee: FC<TEmployees> = ({
   id,
@@ -18,15 +22,18 @@ const OneEmployee: FC<TEmployees> = ({
   const [changeMode, setChangeMode] = useState(false);
   const dispatch = useAppDispatch();
 
+
   const handleChange = () => {
-    setChangeMode(!changeMode);
+    setChangeMode(()=>!changeMode);
   };
+
+  const navigate = useNavigate()
   return (
     <>
       {!changeMode ? (
         <div className="oneEmployee">
           <div>
-            <div>{name}</div>
+            <div onClick={()=>navigate(`/employees/${id}`)}>{name}</div>
             <div>{surname}</div>
             <div>{email}</div>
             <div>{position}</div>
@@ -41,6 +48,7 @@ const OneEmployee: FC<TEmployees> = ({
             </button>
             <button
               onClick={() => {
+                dispatch(filterEmployees(id))
                 dispatch(deleteEmployees(id));
               }}
             >
@@ -49,7 +57,7 @@ const OneEmployee: FC<TEmployees> = ({
           </div>
         </div>
       ) : (
-        <ChangeInputs />
+        <ChangeInputs handleChange={handleChange} id={id} />
       )}
     </>
   );
