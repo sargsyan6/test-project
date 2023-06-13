@@ -1,5 +1,5 @@
 import { useAppSelector } from 'app/store';
-import { TTasks, createLocalTask } from 'features/getTasks/getTasks';
+import {  createLocalTask } from 'features/getTasks/getTasks';
 import React, { useState } from 'react';
 import { useDispatch,  } from 'react-redux';
 

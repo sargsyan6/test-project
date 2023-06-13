@@ -1,5 +1,5 @@
 import { useAppSelector } from 'app/store';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useParams } from 'react-router-dom';
 
 const Profile = () => {

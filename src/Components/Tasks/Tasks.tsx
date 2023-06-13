@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import "./Tasks.css"
-import getTasks, { addTasks } from 'features/getTasks/getTasks';
+import {  getUser } from 'features/getTasks/getTasks';
 import AllTasks from 'Components/AllTasks';
 import TaskInputs from 'Components/TaskInputs';
 import { useAppDispatch } from 'app/';
@@ -18,15 +18,11 @@ const Tasks = () => {
   const dispatch = useAppDispatch()
 
     useEffect(()=>{
-        // fetch("https://rocky-temple-83495.herokuapp.com/tasks")
-        //     .then((res)=>res.json())
-        //     .then((res)=>{
-        //         dispatch(addTasks(res))
-        //         setIsLoading(false)
-                
-        //     })
+        
 
-        dispatch(getTasks(undefined))
+        dispatch(getUser())
+        setIsLoading(false)
+
     },[])
     return (
         <div>

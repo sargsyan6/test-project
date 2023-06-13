@@ -9,7 +9,6 @@ import ChangeInputs from "Components/ChangeInputs";
 import { useAppDispatch } from "app/store";
 import { useNavigate } from "react-router-dom";
 
-//type THandleChange = ()=>void
 
 const OneEmployee: FC<TEmployees> = ({
   id,

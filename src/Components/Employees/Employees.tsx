@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from "react";
+import  {  useEffect, useState } from "react";
 import "./Employees.css";
 import { useAppDispatch, useAppSelector } from "app/store";
 import { TEmployees, addEmployees } from "features/getEmployees/getEmployees";

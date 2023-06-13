@@ -1,4 +1,3 @@
-import { log } from "console";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 export type TEmployees = {
@@ -50,6 +49,8 @@ export const editEmployees = createAsyncThunk(
     }
   }
 );
+
+
 export const createEmployees = createAsyncThunk(
   "async/editEmployees",
   async (data: TEmployees) => {
@@ -61,7 +62,7 @@ export const createEmployees = createAsyncThunk(
         headers: { "Content-Type": "application/json" },
       })
         .then((res) => res.json())
-        .then((res) => res );
+        .then((res) => res);
     } catch (e) {
       return "reject";
     }
@@ -79,7 +80,7 @@ export const employeesSlice = createSlice({
       return state.filter((oneState: TEmployees) => oneState.id !== payload);
     },
     createLocalEmployees: (state, { payload }) => {
-        state.push(payload)
+      state.push(payload);
     },
     changeEmployess: (state, { payload: { id, name, surname, email } }) => {
       return state.map((oneState) => {

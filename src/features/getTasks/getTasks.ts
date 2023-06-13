@@ -1,17 +1,14 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-
+import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 export type TTasks = {
-  id?: number|string;
+  id?: number | string;
   name?: string;
   description?: string;
   startDate?: string;
   endDate?: string;
-  employeeId?: number|string;
-}
-
+  employeeId?: number | string;
+};
 const initialState: Array<TTasks> = [];
-
-export const getTasks = createAsyncThunk(
+export const getUser = createAsyncThunk(
   "async/getTasks",
   async (arg, ThunkAPI) => {
     const baseUrl = "https://rocky-temple-83495.herokuapp.com/tasks";
@@ -25,26 +22,32 @@ export const getTasks = createAsyncThunk(
           return res;
         });
     } catch (e) {
-      return "reject";
+      return ThunkAPI.rejectWithValue(e);
     }
   }
 );
-
 export const tasksSlice = createSlice({
   name: "tasks",
   initialState,
   reducers: {
-    addTasks:(state:Array<TTasks> , {payload})=>{
-      console.log(payload);
-      
-      return payload
-    } ,
-    createLocalTask:(state , {payload})=>{
-      console.log(state);
-      return [...state , payload]
-    }
+    addTasks: (state: Array<TTasks>, { payload }) => {
+      return payload;
+    },
+    createLocalTask: (state, { payload }) => {
+      return [...state, payload];
+    },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(getUser.fulfilled, (state, action: PayloadAction<TTasks[]>) => {
+        state = action.payload;
+        return state;
+      })
+      .addCase(getUser.rejected, () => {
+        console.error("Something was wrong");
+      });
   },
 });
 
-export const {addTasks , createLocalTask} = tasksSlice.actions
+export const { addTasks, createLocalTask } = tasksSlice.actions;
 export default tasksSlice.reducer;

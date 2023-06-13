@@ -11,8 +11,7 @@ const AllTasks = () => {
   return (
     <>
       {select.length ?select.map(({id,name,description ,startDate , endDate }:TTasks) => {
-        return <div key={id}>
-            <div>{id}</div>
+        return <div className="tasks_container" key={id}>
             <div>{name}</div>
             <div>{description}</div>
             <div>{startDate}</div>

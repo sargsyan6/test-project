@@ -1,12 +1,12 @@
 import { configureStore } from "@reduxjs/toolkit";
 import employeesReduser from "../features/getEmployees/getEmployees";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
-import tasksReducer from "features/getTasks";
+import tasksSlicer from "../features/getTasks/getTasks";
 
 const store = configureStore({
   reducer: {
     employees:employeesReduser,
-    tasks:tasksReducer
+    tasks: tasksSlicer
   },
 });
 
