@@ -39,14 +39,14 @@ const OneEmployee: FC<TEmployees> = ({
             <div>{position}</div>
           </div>
           <div>
-            <button
+            <button className="change"
               onClick={() => {
                 handleChange && handleChange();
               }}
             >
               Change
             </button>
-            <button
+            <button className="delete"
               onClick={() => {
                 dispatch(filterEmployees(id))
                 dispatch(deleteEmployees(id));

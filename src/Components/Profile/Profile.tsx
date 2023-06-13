@@ -10,7 +10,7 @@ const Profile = () => {
 
         <>
             {select.length?select.map((it)=>{
-                return <div>{it.name}</div>
+                return <div >{it.name}</div>
             }): <div>Not Found</div>}
         </>
        

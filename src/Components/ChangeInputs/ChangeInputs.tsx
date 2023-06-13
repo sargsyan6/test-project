@@ -15,6 +15,18 @@ const ChangeInputs: FC<TArg> = ({ id, handleChange }) => {
   const [changeSurName, setChangeSurName] = useState("");
   const [changeEmail, setChangeEmail] = useState("");
 
+  type TObj = {
+    name: string;
+    surname: string;
+    email: string;
+  };
+
+  const obj: TObj = {
+    name: changeName,
+    surname: changeSurName,
+    email: changeEmail,
+  };
+
   const dispatch = useAppDispatch();
   const handleChangeName = (e: React.ChangeEvent<HTMLInputElement>) =>
     setChangeName(e.target.value);
@@ -23,12 +35,14 @@ const ChangeInputs: FC<TArg> = ({ id, handleChange }) => {
   const handleChangeEmail = (e: React.ChangeEvent<HTMLInputElement>) =>
     setChangeEmail(e.target.value);
   const handleSave = async () => {
-    await editEmployees({
-      id: id,
-      name: changeName,
-      surname: changeSurName,
-      email: changeEmail,
-    });
+    await dispatch(
+      editEmployees({
+        id: id,
+        name: changeName,
+        surname: changeSurName,
+        email: changeEmail,
+      })
+    );
     await dispatch(
       changeEmployess({
         id: id,

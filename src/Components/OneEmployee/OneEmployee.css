@@ -2,3 +2,17 @@
     border: 1px solid green;
 }
 
+.change{
+    background-color: chartreuse;
+    width: 70px;
+    padding: 10px;
+    border-radius: 10px;
+
+}
+
+.delete{
+    background-color: red;
+    width: 70px;
+    padding: 10px;
+    border-radius: 10px;
+}

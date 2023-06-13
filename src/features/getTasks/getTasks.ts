@@ -1,19 +1,19 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
-type TTasks = {
-  id: number|string;
-  name: string;
-  description: string;
-  startDate: string;
-  endDate: string;
+export type TTasks = {
+  id?: number|string;
+  name?: string;
+  description?: string;
+  startDate?: string;
+  endDate?: string;
   employeeId?: number|string;
-}[];
+}
 
-const initialState: TTasks = [];
+const initialState: Array<TTasks> = [];
 
 export const getTasks = createAsyncThunk(
-  "async/getEmployees",
-  async (arg,thunkAPI) => {
+  "async/getTasks",
+  async (arg, ThunkAPI) => {
     const baseUrl = "https://rocky-temple-83495.herokuapp.com/tasks";
     try {
       return await fetch(baseUrl, {
@@ -21,7 +21,7 @@ export const getTasks = createAsyncThunk(
         headers: { "Content-Type": "application/json" },
       })
         .then((res) => res.json())
-        .then((res: TTasks) => {
+        .then((res: Array<TTasks>) => {
           return res;
         });
     } catch (e) {
@@ -34,11 +34,17 @@ export const tasksSlice = createSlice({
   name: "tasks",
   initialState,
   reducers: {
-    addTasks:(state:TTasks , {payload})=>{
+    addTasks:(state:Array<TTasks> , {payload})=>{
+      console.log(payload);
+      
       return payload
+    } ,
+    createLocalTask:(state , {payload})=>{
+      console.log(state);
+      return [...state , payload]
     }
   },
 });
 
-export const {addTasks} = tasksSlice.actions
+export const {addTasks , createLocalTask} = tasksSlice.actions
 export default tasksSlice.reducer;

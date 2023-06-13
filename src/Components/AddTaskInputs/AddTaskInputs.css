@@ -1,0 +1,13 @@
+.save{
+    background-color: greenyellow;
+    padding: 5px;
+    width: 80px;
+    border-radius: 4px;
+}
+
+.cancel{
+    background-color: red;
+    padding: 5px;
+    width: 80px;
+    border-radius: 4px;
+}
