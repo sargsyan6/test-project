@@ -17,8 +17,8 @@ const Employees = () => {
 
   const lastPageIndex = cuurrentPage * limit
   const firstPageIndex = lastPageIndex - cuurrentPage
-  const current = selector.slice(firstPageIndex , lastPageIndex+1)
-  console.log(current);
+  const current = selector.slice(firstPageIndex , lastPageIndex)
+  
   
 
   const paginate = (pageNumber:number)=> {
